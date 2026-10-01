@@ -1,4 +1,4 @@
-import type { Merchant, SpotlightOffering, RosterRecord } from "@/lib/types";
+import type { Merchant, SpotlightOffering, RosterRecord, Review } from "@/lib/types";
 
 export const MERCHANTS: Merchant[] = [
   {
@@ -172,6 +172,63 @@ export const ROSTER: RosterRecord[] = [
     studentPhone: "+91 99000 22334",
     payment: { status: "PAID", method: "UPI", vpaApp: "Paytm", paidAt: "2026-09-29T12:15:00Z" },
     operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE" },
+  },
+];
+
+export const REVIEWS: Review[] = [
+  {
+    id: "rev_t1",
+    merchantId: "manjunath-tennis",
+    author: "Arjun Rao",
+    rating: 5,
+    text: "Joined with zero experience — by the second week I was actually rallying. Groups are small enough that you get real correction, not just drills.",
+    relativeDate: "3 weeks ago",
+    verifiedBooking: true,
+  },
+  {
+    id: "rev_t2",
+    merchantId: "manjunath-tennis",
+    author: "Priya Nair",
+    rating: 5,
+    text: "The evening batch after work is perfect — floodlit courts, and the coaching is patient without being slow.",
+    relativeDate: "1 month ago",
+    verifiedBooking: true,
+  },
+  {
+    id: "rev_t3",
+    merchantId: "manjunath-tennis",
+    author: "Devika Shetty",
+    rating: 4,
+    text: "Great coaching, just wish there were more evening slots — they genuinely fill up since the spot is only yours once you've paid.",
+    relativeDate: "1 month ago",
+    verifiedBooking: true,
+  },
+  {
+    id: "rev_m1",
+    merchantId: "the-works-mma",
+    author: "Rohan Mehta",
+    rating: 5,
+    text: "Walked in with zero experience and left actually understanding positions, not just throwing punches. Coaches clearly compete themselves.",
+    relativeDate: "2 weeks ago",
+    verifiedBooking: true,
+  },
+  {
+    id: "rev_m2",
+    merchantId: "the-works-mma",
+    author: "Sana Khan",
+    rating: 5,
+    text: "Loved the emphasis on respect in the room — never felt intimidated as a first-timer, and the gi provided was clean and ready.",
+    relativeDate: "3 weeks ago",
+    verifiedBooking: true,
+  },
+  {
+    id: "rev_m3",
+    merchantId: "the-works-mma",
+    author: "Vikram Pillai",
+    rating: 5,
+    text: "Had to cancel last minute and the refund was instant, no back-and-forth. Made it an easy first booking.",
+    relativeDate: "1 month ago",
+    verifiedBooking: true,
   },
 ];
 

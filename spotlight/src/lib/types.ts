@@ -13,6 +13,16 @@ export type Merchant = {
   refundRate: number;
 };
 
+export type Review = {
+  id: string;
+  merchantId: string;
+  author: string;
+  rating: number;
+  text: string;
+  relativeDate: string;
+  verifiedBooking: boolean;
+};
+
 export type Batch = {
   id: string;
   label: string;

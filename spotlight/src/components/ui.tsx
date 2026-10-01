@@ -1,4 +1,5 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
@@ -44,6 +45,50 @@ export function Button({ variant = "primary", className, ...props }: ButtonProps
       )}
       {...props}
     />
+  );
+}
+
+export function BottomSheet({
+  onClose,
+  icon,
+  title,
+  subtitle,
+  children,
+}: {
+  onClose: () => void;
+  icon: ReactNode;
+  title: string;
+  subtitle: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={onClose}>
+      <div
+        className="w-full max-w-[420px] max-h-[80vh] overflow-y-auto bg-white rounded-t-2xl p-5 pb-7"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <div className="h-9 w-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+              {icon}
+            </div>
+            <div>
+              <p className="font-bold text-slate-900 text-[15px]">{title}</p>
+              <p className="text-xs text-slate-500">{subtitle}</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="text-slate-400 shrink-0">
+            <X size={20} />
+          </button>
+        </div>
+
+        {children}
+
+        <button onClick={onClose} className="w-full mt-5 bg-slate-900 text-white rounded-full py-2.5 text-sm font-semibold">
+          Got it
+        </button>
+      </div>
+    </div>
   );
 }
 

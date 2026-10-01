@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ShieldCheck, MapPin, Star, PackageCheck, RotateCcw, X, BadgeCheck, Landmark, RefreshCcw } from "lucide-react";
+import { ShieldCheck, MapPin, Star, PackageCheck, RotateCcw, BadgeCheck, Landmark, RefreshCcw, MessageSquareQuote } from "lucide-react";
 import type { Merchant, SpotlightOffering } from "@/lib/types";
 import { formatRupees } from "@/lib/utils";
-import { Badge } from "@/components/ui";
+import { Badge, BottomSheet } from "@/components/ui";
+import { REVIEWS } from "@/data/seed";
 
 export function OfferingView({
   offering,
@@ -18,6 +19,8 @@ export function OfferingView({
   children?: React.ReactNode;
 }) {
   const [showVerifiedInfo, setShowVerifiedInfo] = useState(false);
+  const [showReviews, setShowReviews] = useState(false);
+  const reviews = REVIEWS.filter((r) => r.merchantId === merchant.merchantId);
 
   return (
     <div className="flex-1">
@@ -48,11 +51,13 @@ export function OfferingView({
               </Badge>
             </button>
           )}
-          <Badge tone="green">
-            <span className="inline-flex items-center gap-1">
-              <Star size={11} /> {merchant.rating} · {merchant.eventsHosted} events
-            </span>
-          </Badge>
+          <button onClick={() => setShowReviews(true)} className="active:scale-95 transition-transform">
+            <Badge tone="green">
+              <span className="inline-flex items-center gap-1">
+                <Star size={11} /> {merchant.rating} · {reviews.length} reviews
+              </span>
+            </Badge>
+          </button>
         </div>
 
         <h1 className="text-xl font-bold text-slate-900 leading-snug">{offering.title}</h1>
@@ -102,64 +107,78 @@ export function OfferingView({
       </div>
 
       {showVerifiedInfo && (
-        <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40" onClick={() => setShowVerifiedInfo(false)}>
-          <div
-            className="w-full max-w-[420px] bg-white rounded-t-2xl p-5 pb-7"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-start justify-between mb-3">
-              <div className="flex items-center gap-2">
-                <div className="h-9 w-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
-                  <ShieldCheck size={18} />
-                </div>
-                <div>
-                  <p className="font-bold text-slate-900 text-[15px]">Razorpay Verified</p>
-                  <p className="text-xs text-slate-500">What this badge means</p>
-                </div>
-              </div>
-              <button onClick={() => setShowVerifiedInfo(false)} className="text-slate-400">
-                <X size={20} />
-              </button>
+        <BottomSheet
+          onClose={() => setShowVerifiedInfo(false)}
+          icon={<ShieldCheck size={18} />}
+          title="Razorpay Verified"
+          subtitle="What this badge means"
+        >
+          <p className="text-sm text-slate-700 mb-4">
+            {merchant.name} has completed Razorpay&apos;s business verification — this isn&apos;t a self-declared badge.
+            Here&apos;s what was checked and what it means for you as a customer.
+          </p>
+
+          <div className="flex flex-col gap-3">
+            <div className="flex items-start gap-2.5">
+              <BadgeCheck size={16} className="text-blue-600 mt-0.5 shrink-0" />
+              <p className="text-xs text-slate-600">
+                <span className="font-semibold text-slate-900">KYC &amp; business details verified</span> — PAN, bank
+                account, and business identity were checked by Razorpay before this merchant could accept payments.
+              </p>
             </div>
-
-            <p className="text-sm text-slate-700 mb-4">
-              {merchant.name} has completed Razorpay&apos;s business verification — this isn&apos;t a self-declared badge.
-              Here&apos;s what was checked and what it means for you as a customer.
-            </p>
-
-            <div className="flex flex-col gap-3">
-              <div className="flex items-start gap-2.5">
-                <BadgeCheck size={16} className="text-blue-600 mt-0.5 shrink-0" />
-                <p className="text-xs text-slate-600">
-                  <span className="font-semibold text-slate-900">KYC &amp; business details verified</span> — PAN, bank
-                  account, and business identity were checked by Razorpay before this merchant could accept payments.
-                </p>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <Landmark size={16} className="text-blue-600 mt-0.5 shrink-0" />
-                <p className="text-xs text-slate-600">
-                  <span className="font-semibold text-slate-900">Funds settle to a verified bank account</span> — your
-                  payment doesn&apos;t go to a personal UPI ID; it&apos;s processed and settled through Razorpay.
-                </p>
-              </div>
-              <div className="flex items-start gap-2.5">
-                <RefreshCcw size={16} className="text-blue-600 mt-0.5 shrink-0" />
-                <p className="text-xs text-slate-600">
-                  <span className="font-semibold text-slate-900">Refund rate: {merchant.refundRate}%</span> across{" "}
-                  {merchant.eventsHosted} events hosted — if this booking is canceled within policy, the refund is
-                  automatic, not something you have to chase.
-                </p>
-              </div>
+            <div className="flex items-start gap-2.5">
+              <Landmark size={16} className="text-blue-600 mt-0.5 shrink-0" />
+              <p className="text-xs text-slate-600">
+                <span className="font-semibold text-slate-900">Funds settle to a verified bank account</span> — your
+                payment doesn&apos;t go to a personal UPI ID; it&apos;s processed and settled through Razorpay.
+              </p>
             </div>
-
-            <button
-              onClick={() => setShowVerifiedInfo(false)}
-              className="w-full mt-5 bg-slate-900 text-white rounded-full py-2.5 text-sm font-semibold"
-            >
-              Got it
-            </button>
+            <div className="flex items-start gap-2.5">
+              <RefreshCcw size={16} className="text-blue-600 mt-0.5 shrink-0" />
+              <p className="text-xs text-slate-600">
+                <span className="font-semibold text-slate-900">Refund rate: {merchant.refundRate}%</span> across{" "}
+                {merchant.eventsHosted} events hosted — if this booking is canceled within policy, the refund is
+                automatic, not something you have to chase.
+              </p>
+            </div>
           </div>
-        </div>
+        </BottomSheet>
+      )}
+
+      {showReviews && (
+        <BottomSheet
+          onClose={() => setShowReviews(false)}
+          icon={<MessageSquareQuote size={18} />}
+          title={`${merchant.rating}★ · ${reviews.length} reviews`}
+          subtitle="From customers who booked through Spotlight"
+        >
+          <div className="flex flex-col gap-3">
+            {reviews.map((r) => (
+              <div key={r.id} className="border-b border-slate-100 pb-3 last:border-0 last:pb-0">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-slate-900">{r.author}</p>
+                  <span className="text-[11px] text-slate-400">{r.relativeDate}</span>
+                </div>
+                <div className="flex items-center gap-0.5 my-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      size={12}
+                      className={i < r.rating ? "text-amber-400 fill-amber-400" : "text-slate-200 fill-slate-200"}
+                    />
+                  ))}
+                  {r.verifiedBooking && (
+                    <span className="ml-1.5 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded-full">
+                      Verified booking
+                    </span>
+                  )}
+                </div>
+                <p className="text-xs text-slate-600">{r.text}</p>
+              </div>
+            ))}
+            {reviews.length === 0 && <p className="text-sm text-slate-400">No reviews yet.</p>}
+          </div>
+        </BottomSheet>
       )}
     </div>
   );
