@@ -73,6 +73,8 @@ To guarantee high performance, rapid iteration, and zero infrastructure overhead
 
 This is the schema that the **public booking page renderer** (`src/components/OfferingView.tsx`, used by both the merchant preview and the public `/p/[merchantId]/[slug]` page) reads from. It is deliberately generic: any JSON matching this shape — including a real merchant's future content/images — renders correctly with no code changes.
 
+A batch deliberately has no `filled`/enrolled count of its own — that's always derived at render time from the actual roster records (`roster.filter(r => r.offeringId === ... && r.batchId === ... && r.operations.bookingStatus === "ATTENDING").length`, see `store.enrolledCount`). An early version stored enrollment as a separate hand-authored number on the batch, which silently drifted from the real roster count — a UI showing "7/12 enrolled" next to only 2 actual bookings. Never reintroduce a stored enrollment counter; always derive it from roster.
+
 ```json
 {
   "offeringId": "spotlight-tennis-nov",
@@ -85,8 +87,8 @@ This is the schema that the **public booking page renderer** (`src/components/Of
   "schedule": {
     "days": ["Monday", "Wednesday", "Friday", "Tuesday", "Thursday", "Saturday"],
     "batches": [
-      { "id": "b1", "label": "Morning Batch", "timing": "06:30 - 08:00 AM", "capacity": 4, "filled": 3 },
-      { "id": "b2", "label": "Evening Batch", "timing": "07:00 - 08:30 PM", "capacity": 4, "filled": 2 }
+      { "id": "b1", "label": "Morning Batch", "timing": "06:30 - 08:00 AM", "capacity": 4, "nextSessionLabel": "Mon, Oct 6" },
+      { "id": "b2", "label": "Evening Batch", "timing": "07:00 - 08:30 PM", "capacity": 4, "nextSessionLabel": "Wed, Oct 8" }
     ]
   },
   "logistics": {

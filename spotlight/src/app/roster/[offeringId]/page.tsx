@@ -30,7 +30,8 @@ function RosterContent({ offeringId }: { offeringId: string }) {
   }
 
   const totalCapacity = offering.schedule.batches.reduce((s, b) => s + b.capacity, 0);
-  const totalFilled = offering.schedule.batches.reduce((s, b) => s + b.filled, 0);
+  // Derived from the actual roster, never a separately maintained counter.
+  const totalFilled = records.filter((r) => r.operations.bookingStatus === "ATTENDING").length;
   const isRecurring = offering.offeringType === "recurring_batch";
   const fullLink = typeof window !== "undefined" ? `${window.location.origin}/p/${merchant.merchantId}/${offering.slug}` : "";
 

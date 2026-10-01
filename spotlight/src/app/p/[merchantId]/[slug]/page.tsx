@@ -10,7 +10,7 @@ import { formatRupees } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 
 function BookingFlow({ merchantId, slug }: { merchantId: string; slug: string }) {
-  const { merchants, offerings, bookSlot } = useSpotlight();
+  const { merchants, offerings, bookSlot, enrolledCount } = useSpotlight();
   const merchant = merchants.find((m) => m.merchantId === merchantId);
   const offering = offerings.find((o) => o.merchantId === merchantId && o.slug === slug);
 
@@ -25,7 +25,8 @@ function BookingFlow({ merchantId, slug }: { merchantId: string; slug: string })
   }
 
   const batch = offering.schedule.batches.find((b) => b.id === selectedBatch);
-  const full = !!batch && batch.filled >= batch.capacity;
+  const batchEnrolled = batch ? enrolledCount(offering.offeringId, batch.id) : 0;
+  const full = !!batch && batchEnrolled >= batch.capacity;
 
   function handlePay() {
     if (!name.trim() || !phone.trim() || full) return;
@@ -71,7 +72,7 @@ function BookingFlow({ merchantId, slug }: { merchantId: string; slug: string })
           {offering.offeringType === "recurring_batch" ? (
             <div className="flex gap-2 flex-wrap">
               {offering.schedule.batches.map((b) => {
-                const isFull = b.filled >= b.capacity;
+                const isFull = enrolledCount(offering.offeringId, b.id) >= b.capacity;
                 return (
                   <button
                     key={b.id}
@@ -93,7 +94,7 @@ function BookingFlow({ merchantId, slug }: { merchantId: string; slug: string })
               {offering.schedule.date}
             </div>
           )}
-          {batch && <Badge tone={full ? "red" : "neutral"}>{batch.filled}/{batch.capacity} booked{full ? " · Full" : ""}</Badge>}
+          {batch && <Badge tone={full ? "red" : "neutral"}>{batchEnrolled}/{batch.capacity} booked{full ? " · Full" : ""}</Badge>}
         </div>
 
         <div className="mt-4 grid grid-cols-1 gap-2">

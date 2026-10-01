@@ -31,9 +31,9 @@ export function parseTranscript(transcript: string): ParsedDraft {
 
   const draft: SpotlightOffering = JSON.parse(JSON.stringify(template));
   draft.status = "draft";
-  // A newly described offering has no bookings yet — the template's filled
-  // counts are seed/demo data for the pre-published example offerings only.
-  draft.schedule.batches = draft.schedule.batches.map((b) => ({ ...b, filled: 0 }));
+  // Enrollment is derived from actual roster records (see store.enrolledCount),
+  // not stored on the batch, so a freshly cloned draft naturally starts at
+  // zero bookings without needing to reset anything here.
 
   const priceMatch =
     text.match(/(?:rs\.?|₹|inr)\s?(\d{3,6})/) ?? text.match(/(\d{3,6})\s?(?:rs\.?|₹|inr)/);

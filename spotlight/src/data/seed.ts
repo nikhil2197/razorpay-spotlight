@@ -41,7 +41,7 @@ export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"]
  * any saved session silently never sees new seed content again, since the
  * persisted copy always wins once it exists.
  */
-export const SEED_VERSION = 2;
+export const SEED_VERSION = 3;
 
 export const OFFERINGS: SpotlightOffering[] = [
   {
@@ -56,8 +56,8 @@ export const OFFERINGS: SpotlightOffering[] = [
     schedule: {
       days: ["Monday", "Wednesday", "Friday", "Tuesday", "Thursday", "Saturday"],
       batches: [
-        { id: "b1", label: "Morning Batch", timing: "06:30 - 08:00 AM", capacity: 4, filled: 3, nextSessionLabel: "Mon, Oct 6" },
-        { id: "b2", label: "Evening Batch", timing: "07:00 - 08:30 PM", capacity: 4, filled: 2, nextSessionLabel: "Wed, Oct 8" },
+        { id: "b1", label: "Morning Batch", timing: "06:30 - 08:00 AM", capacity: 4, nextSessionLabel: "Mon, Oct 6" },
+        { id: "b2", label: "Evening Batch", timing: "07:00 - 08:30 PM", capacity: 4, nextSessionLabel: "Wed, Oct 8" },
       ],
     },
     logistics: {
@@ -96,7 +96,7 @@ export const OFFERINGS: SpotlightOffering[] = [
     schedule: {
       days: [],
       date: "Tuesday, Oct 7 | 7:30 - 9:30 PM",
-      batches: [{ id: "b1", label: "Single Session", timing: "7:30 - 9:30 PM", capacity: 12, filled: 7 }],
+      batches: [{ id: "b1", label: "Single Session", timing: "7:30 - 9:30 PM", capacity: 12 }],
     },
     logistics: {
       equipmentPolicy: "All equipment provided. Clean gi provided, no prior experience needed.",

@@ -28,7 +28,6 @@ export type Batch = {
   label: string;
   timing: string;
   capacity: number;
-  filled: number;
   /** Next upcoming occurrence of this batch, e.g. "Mon, Oct 6" — only meaningful for recurring batches. */
   nextSessionLabel?: string;
 };

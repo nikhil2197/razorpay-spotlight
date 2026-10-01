@@ -52,6 +52,8 @@ type SpotlightContextValue = {
   upsertOffering: (offering: SpotlightOffering) => void;
   getOffering: (offeringId: string) => SpotlightOffering | undefined;
   rosterFor: (offeringId: string) => RosterRecord[];
+  /** Live enrolled count derived from actual roster records — never trust a hand-authored `batch.filled` number, it can and did drift from reality. */
+  enrolledCount: (offeringId: string, batchId?: string) => number;
   setAttendance: (bookingId: string, attendance: AttendanceStatus) => void;
   requestReview: (bookingId: string) => void;
   cancelAndRefundAll: (offeringId: string) => void;
@@ -107,6 +109,17 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
     [roster]
   );
 
+  const enrolledCount = useCallback(
+    (offeringId: string, batchId?: string) =>
+      roster.filter(
+        (r) =>
+          r.offeringId === offeringId &&
+          (batchId ? r.batchId === batchId : true) &&
+          r.operations.bookingStatus === "ATTENDING"
+      ).length,
+    [roster]
+  );
+
   const setAttendance = useCallback((bookingId: string, attendance: AttendanceStatus) => {
     setRoster((prev) => prev.map((r) => (r.bookingId === bookingId ? { ...r, operations: { ...r.operations, attendance } } : r)));
   }, []);
@@ -158,18 +171,6 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
         operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
       };
       setRoster((prev) => [...prev, record]);
-      setOfferings((prev) =>
-        prev.map((o) => {
-          if (o.offeringId !== offeringId) return o;
-          return {
-            ...o,
-            schedule: {
-              ...o.schedule,
-              batches: o.schedule.batches.map((b) => (b.id === batchId ? { ...b, filled: Math.min(b.capacity, b.filled + 1) } : b)),
-            },
-          };
-        })
-      );
       return record;
     },
     []
@@ -187,6 +188,7 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
     upsertOffering,
     getOffering,
     rosterFor,
+    enrolledCount,
     setAttendance,
     requestReview,
     cancelAndRefundAll,

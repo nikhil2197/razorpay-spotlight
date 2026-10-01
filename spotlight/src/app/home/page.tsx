@@ -11,7 +11,7 @@ import { formatRupees } from "@/lib/utils";
 import { SEED_OFFERING_IDS } from "@/data/seed";
 
 function HomeContent() {
-  const { merchant, offerings } = useSpotlight();
+  const { merchant, offerings, roster } = useSpotlight();
   const router = useRouter();
   if (!merchant) return null;
 
@@ -20,9 +20,13 @@ function HomeContent() {
   // card here. Real per-batch naming (e.g. "Oct MWF Evening Batch") is a
   // later problem once offerings are meant to accumulate for real.
   const myOfferings = offerings.filter((o) => o.merchantId === merchant.merchantId && SEED_OFFERING_IDS.includes(o.offeringId));
-  const todayCollected = myOfferings.reduce((sum, o) => {
-    const filled = o.schedule.batches.reduce((s, b) => s + b.filled, 0);
-    return sum + filled * o.pricing.amount;
+  const myOfferingIds = myOfferings.map((o) => o.offeringId);
+  // Derived from actual roster records, never a separately maintained
+  // counter — those can (and did) drift from reality.
+  const paidRecords = roster.filter((r) => myOfferingIds.includes(r.offeringId) && r.payment.status === "PAID");
+  const todayCollected = paidRecords.reduce((sum, r) => {
+    const offering = myOfferings.find((o) => o.offeringId === r.offeringId);
+    return sum + (offering?.pricing.amount ?? 0);
   }, 0);
 
   return (
@@ -42,7 +46,7 @@ function HomeContent() {
           <p className="text-xs text-slate-500 text-center">Collected today</p>
           <p className="text-3xl font-bold text-slate-900 text-center mt-1">{formatRupees(todayCollected)}</p>
           <button className="mx-auto mt-3 flex items-center gap-1 bg-slate-100 rounded-full px-4 py-2 text-xs font-semibold text-slate-700">
-            View breakdown ({myOfferings.reduce((s, o) => s + o.schedule.batches.reduce((x, b) => x + b.filled, 0), 0)} payments)
+            View breakdown ({paidRecords.length} payments)
             <ChevronDown size={14} />
           </button>
           <div className="flex mt-4 pt-3 border-t border-slate-100">

@@ -13,7 +13,7 @@ import { formatRupees } from "@/lib/utils";
 function PreviewContent() {
   const params = useSearchParams();
   const id = params.get("id") ?? "";
-  const { merchant, getOffering, upsertOffering } = useSpotlight();
+  const { merchant, getOffering, upsertOffering, enrolledCount } = useSpotlight();
   const router = useRouter();
   const [flags, setFlags] = useState<string[]>([]);
 
@@ -108,7 +108,7 @@ function PreviewContent() {
             {offering.schedule.batches.map((b) => (
               <div key={b.id} className="flex items-center justify-between bg-slate-50 rounded-lg px-3 py-2 text-xs">
                 <span className="font-semibold text-slate-700">{b.label} · {b.timing}</span>
-                <span className="text-slate-500">{b.filled}/{b.capacity} filled</span>
+                <span className="text-slate-500">{enrolledCount(offering.offeringId, b.id)}/{b.capacity} filled</span>
               </div>
             ))}
           </div>
