@@ -46,7 +46,7 @@ function RosterContent({ offeringId }: { offeringId: string }) {
         <button onClick={() => router.push("/home")} className="text-slate-500">
           <ArrowLeft size={20} />
         </button>
-        <h1 className="text-lg font-bold text-slate-900 truncate">{offering.title}</h1>
+        <h1 className="text-lg font-bold text-slate-900 truncate">{offering.internalLabel ?? offering.title}</h1>
       </div>
 
       <div className="px-5 grid grid-cols-2 gap-2 mb-3">
@@ -69,7 +69,7 @@ function RosterContent({ offeringId }: { offeringId: string }) {
       <div className="px-5">
         <Card className="flex items-center justify-between">
           <div>
-            <p className="text-sm font-bold text-slate-900">{offering.title}</p>
+            <p className="text-sm font-bold text-slate-900">{offering.internalLabel ?? offering.title}</p>
             <p className="text-xs text-slate-500">
               {offering.schedule.date ?? offering.schedule.batches.map((b) => b.timing).join(" · ")}
             </p>

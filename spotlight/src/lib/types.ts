@@ -44,6 +44,8 @@ export type SpotlightOffering = {
   title: string;
   offeringType: OfferingType;
   status: OfferingStatus;
+  /** Merchant-facing shorthand for Home/Roster headings (e.g. "October Batch", "01/10 batch") — distinct from `title`, which is the customer-facing name shown on the public booking page. Falls back to `title` when unset. */
+  internalLabel?: string;
   pricing: {
     amount: number;
     currency: string;

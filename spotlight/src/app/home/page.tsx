@@ -96,7 +96,7 @@ function HomeContent() {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-semibold text-slate-900">{o.title}</p>
+                    <p className="text-sm font-semibold text-slate-900">{o.internalLabel ?? o.title}</p>
                     <p className="text-xs text-slate-500">{formatRupees(o.pricing.amount)} {o.pricing.unitLabel}</p>
                   </div>
                   <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full shrink-0">
