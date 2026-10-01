@@ -66,7 +66,7 @@ function ShareContent() {
         </div>
       </div>
 
-      <div className="px-5 pb-6 pt-4 mt-auto sticky bottom-0 bg-[#f4f5f7] grid grid-cols-2 gap-3">
+      <div className="px-5 pb-6 pt-4 mt-auto sticky bottom-0 bg-[#f4f5f7] flex flex-col gap-3">
         <Button
           variant="outline"
           className="w-full flex items-center justify-center gap-1.5"
