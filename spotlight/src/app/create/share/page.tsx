@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { CheckCircle2, Copy, MessageCircle, Camera, ClipboardList, Check } from "lucide-react";
+import { CheckCircle2, Copy, MessageCircle, Camera, Check, ExternalLink, Home } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { RequireMerchant } from "@/components/RequireMerchant";
 import { Button, Card } from "@/components/ui";
@@ -66,20 +66,16 @@ function ShareContent() {
         </div>
       </div>
 
-      <div className="px-5 mt-6">
-        <a
-          href={fullLink}
-          target="_blank"
-          rel="noreferrer"
-          className="text-xs text-blue-600 font-semibold underline underline-offset-2"
+      <div className="px-5 pb-6 pt-4 mt-auto sticky bottom-0 bg-[#f4f5f7] grid grid-cols-2 gap-3">
+        <Button
+          variant="outline"
+          className="w-full flex items-center justify-center gap-1.5"
+          onClick={() => window.open(fullLink, "_blank", "noopener,noreferrer")}
         >
-          Preview as a customer →
-        </a>
-      </div>
-
-      <div className="px-5 pb-6 pt-4 mt-auto sticky bottom-0 bg-[#f4f5f7]">
-        <Button variant="secondary" className="w-full flex items-center justify-center gap-2" onClick={() => router.push(`/roster/${offering.offeringId}`)}>
-          <ClipboardList size={16} /> Open Roster
+          <ExternalLink size={15} /> Preview customer side
+        </Button>
+        <Button variant="primary" className="w-full flex items-center justify-center gap-1.5" onClick={() => router.push("/home")}>
+          <Home size={15} /> Return to home
         </Button>
       </div>
     </div>

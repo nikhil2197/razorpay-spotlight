@@ -26,7 +26,7 @@ export function Badge({ children, tone = "neutral" }: { children: ReactNode; ton
 }
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: "primary" | "secondary" | "danger" | "ghost";
+  variant?: "primary" | "secondary" | "danger" | "ghost" | "outline";
 };
 
 export function Button({ variant = "primary", className, ...props }: ButtonProps) {
@@ -35,6 +35,7 @@ export function Button({ variant = "primary", className, ...props }: ButtonProps
     secondary: "bg-slate-100 text-slate-900 hover:bg-slate-200",
     danger: "bg-white text-red-600 border border-red-300 hover:bg-red-50",
     ghost: "bg-transparent text-blue-600 hover:bg-blue-50",
+    outline: "bg-white text-slate-900 border border-slate-300 hover:bg-slate-50",
   };
   return (
     <button
