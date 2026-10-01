@@ -34,6 +34,15 @@ export const MERCHANTS: Merchant[] = [
 /** The only offerings shown in the Home "Your Spotlights" list for this prototype — see USER_RESEARCH.md / readme for why newly created ones don't appear there yet. */
 export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"];
 
+/**
+ * Bump this whenever MERCHANTS/OFFERINGS/ROSTER content below changes.
+ * The store compares this against what's saved in localStorage and discards
+ * stale persisted state on a mismatch — otherwise a browser that already has
+ * any saved session silently never sees new seed content again, since the
+ * persisted copy always wins once it exists.
+ */
+export const SEED_VERSION = 2;
+
 export const OFFERINGS: SpotlightOffering[] = [
   {
     offeringId: "spotlight-tennis-nov",

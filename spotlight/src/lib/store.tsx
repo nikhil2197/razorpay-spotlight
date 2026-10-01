@@ -9,7 +9,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { MERCHANTS, OFFERINGS, ROSTER } from "@/data/seed";
+import { MERCHANTS, OFFERINGS, ROSTER, SEED_VERSION } from "@/data/seed";
 import type { Merchant, SpotlightOffering, RosterRecord, AttendanceStatus } from "@/lib/types";
 
 const STORAGE_KEY = "spotlight_state_v1";
@@ -18,21 +18,27 @@ type PersistedState = {
   merchantId: string | null;
   offerings: SpotlightOffering[];
   roster: RosterRecord[];
+  seedVersion?: number;
 };
 
+function freshState(merchantId: string | null = null): PersistedState {
+  return { merchantId, offerings: OFFERINGS, roster: ROSTER, seedVersion: SEED_VERSION };
+}
+
 function loadState(): PersistedState {
-  if (typeof window === "undefined") {
-    return { merchantId: null, offerings: OFFERINGS, roster: ROSTER };
-  }
+  if (typeof window === "undefined") return freshState();
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { merchantId: null, offerings: OFFERINGS, roster: ROSTER };
+    if (!raw) return freshState();
     const parsed = JSON.parse(raw) as PersistedState;
+    // Seed content (copy, naming, pricing, etc.) changed since this browser
+    // last saved state — reseed rather than silently keep showing stale data.
+    if (parsed.seedVersion !== SEED_VERSION) return freshState(parsed.merchantId);
     if (!parsed.offerings?.length) parsed.offerings = OFFERINGS;
     if (!parsed.roster) parsed.roster = ROSTER;
     return parsed;
   } catch {
-    return { merchantId: null, offerings: OFFERINGS, roster: ROSTER };
+    return freshState();
   }
 }
 
@@ -75,7 +81,7 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!hydrated) return;
-    const state: PersistedState = { merchantId, offerings, roster };
+    const state: PersistedState = { merchantId, offerings, roster, seedVersion: SEED_VERSION };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }, [hydrated, merchantId, offerings, roster]);
 
