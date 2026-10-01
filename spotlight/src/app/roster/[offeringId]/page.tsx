@@ -164,14 +164,19 @@ function RosterContent({ offeringId }: { offeringId: string }) {
                 </div>
               </Card>
             ) : (
-              <Button
+              <button
                 key={b.id}
-                variant="danger"
-                className="w-full flex items-center justify-center gap-2"
                 onClick={() => setConfirmCancelBatchId(b.id)}
+                className="w-full flex items-center gap-3 rounded-full border border-red-300 bg-white px-4 py-2.5 text-left hover:bg-red-50 transition-colors"
               >
-                <CalendarX size={16} /> Cancel next session · {b.label}{b.nextSessionLabel ? ` (${b.nextSessionLabel})` : ""}
-              </Button>
+                <CalendarX size={18} className="text-red-600 shrink-0" />
+                <span className="min-w-0">
+                  <span className="block text-sm font-semibold text-red-600 truncate">Cancel next session</span>
+                  <span className="block text-xs text-red-400 truncate">
+                    {b.label}{b.nextSessionLabel ? ` · ${b.nextSessionLabel}` : ""}
+                  </span>
+                </span>
+              </button>
             )
           )
         ) : !confirmCancel ? (
