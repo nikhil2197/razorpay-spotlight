@@ -29,6 +29,8 @@ export type Batch = {
   timing: string;
   capacity: number;
   filled: number;
+  /** Next upcoming occurrence of this batch, e.g. "Mon, Oct 6" — only meaningful for recurring batches. */
+  nextSessionLabel?: string;
 };
 
 export type OfferingType = "recurring_batch" | "single_event";
@@ -102,6 +104,7 @@ export type RosterRecord = {
     attendance: AttendanceStatus;
     bookingStatus: BookingStatus;
     renewalStatus: RenewalStatus;
+    reviewRequested: boolean;
   };
 };
 

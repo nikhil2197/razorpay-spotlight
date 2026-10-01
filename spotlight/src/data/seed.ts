@@ -31,6 +31,9 @@ export const MERCHANTS: Merchant[] = [
   },
 ];
 
+/** The only offerings shown in the Home "Your Spotlights" list for this prototype — see USER_RESEARCH.md / readme for why newly created ones don't appear there yet. */
+export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"];
+
 export const OFFERINGS: SpotlightOffering[] = [
   {
     offeringId: "spotlight-tennis-nov",
@@ -43,8 +46,8 @@ export const OFFERINGS: SpotlightOffering[] = [
     schedule: {
       days: ["Monday", "Wednesday", "Friday", "Tuesday", "Thursday", "Saturday"],
       batches: [
-        { id: "b1", label: "Morning Batch", timing: "06:30 - 08:00 AM", capacity: 4, filled: 3 },
-        { id: "b2", label: "Evening Batch", timing: "07:00 - 08:30 PM", capacity: 4, filled: 2 },
+        { id: "b1", label: "Morning Batch", timing: "06:30 - 08:00 AM", capacity: 4, filled: 3, nextSessionLabel: "Mon, Oct 6" },
+        { id: "b2", label: "Evening Batch", timing: "07:00 - 08:30 PM", capacity: 4, filled: 2, nextSessionLabel: "Wed, Oct 8" },
       ],
     },
     logistics: {
@@ -117,7 +120,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Arjun Rao",
     studentPhone: "+91 98450 12345",
     payment: { status: "PAID", method: "UPI", vpaApp: "GooglePay", paidAt: "2026-09-28T08:30:00Z" },
-    operations: { attendance: "PRESENT", bookingStatus: "ATTENDING", renewalStatus: "DUE_IN_7_DAYS" },
+    operations: { attendance: "PRESENT", bookingStatus: "ATTENDING", renewalStatus: "DUE_IN_7_DAYS", reviewRequested: false },
   },
   {
     bookingId: "bk_982342",
@@ -126,7 +129,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Priya Nair",
     studentPhone: "+91 98450 22345",
     payment: { status: "PAID", method: "UPI", vpaApp: "PhonePe", paidAt: "2026-09-27T09:10:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE" },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
   {
     bookingId: "bk_982343",
@@ -135,7 +138,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Devika Shetty",
     studentPhone: "+91 98450 32345",
     payment: { status: "PAID", method: "UPI", vpaApp: "Paytm", paidAt: "2026-09-26T07:40:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "RENEWED" },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "RENEWED", reviewRequested: false },
   },
   {
     bookingId: "bk_982344",
@@ -144,7 +147,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Karthik Iyer",
     studentPhone: "+91 98450 42345",
     payment: { status: "PAID", method: "UPI", vpaApp: "GooglePay", paidAt: "2026-09-25T18:20:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "DUE_IN_7_DAYS" },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "DUE_IN_7_DAYS", reviewRequested: false },
   },
   {
     bookingId: "bk_982345",
@@ -153,7 +156,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Ishita Bhat",
     studentPhone: "+91 98450 52345",
     payment: { status: "PAID", method: "UPI", vpaApp: "PhonePe", paidAt: "2026-09-25T18:40:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE" },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
   {
     bookingId: "bk_771201",
@@ -162,7 +165,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Rohan Mehta",
     studentPhone: "+91 99000 11223",
     payment: { status: "PAID", method: "UPI", vpaApp: "GooglePay", paidAt: "2026-09-29T11:05:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE" },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
   {
     bookingId: "bk_771202",
@@ -171,7 +174,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Sana Khan",
     studentPhone: "+91 99000 22334",
     payment: { status: "PAID", method: "UPI", vpaApp: "Paytm", paidAt: "2026-09-29T12:15:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE" },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
 ];
 

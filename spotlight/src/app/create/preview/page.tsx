@@ -44,8 +44,15 @@ function PreviewContent() {
     });
   }
 
+  const isEditingPublished = offering?.status === "published";
+
   function handlePublish() {
     if (!offering) return;
+    if (isEditingPublished) {
+      upsertOffering(offering);
+      router.push(`/roster/${offering.offeringId}`);
+      return;
+    }
     upsertOffering({ ...offering, status: "published" });
     router.push(`/create/share?id=${offering.offeringId}`);
   }
@@ -53,11 +60,14 @@ function PreviewContent() {
   return (
     <div className="flex-1 flex flex-col">
       <div className="px-5 pt-4 pb-1 flex items-center gap-2">
-        <button onClick={() => router.push("/create")} className="text-slate-500">
+        <button
+          onClick={() => router.push(isEditingPublished ? `/roster/${offering.offeringId}` : "/create")}
+          className="text-slate-500"
+        >
           <ArrowLeft size={20} />
         </button>
-        <h1 className="text-lg font-bold text-slate-900">Review & confirm</h1>
-        <Badge tone="amber">Draft</Badge>
+        <h1 className="text-lg font-bold text-slate-900">{isEditingPublished ? "Edit Spotlight" : "Review & confirm"}</h1>
+        <Badge tone={isEditingPublished ? "green" : "amber"}>{isEditingPublished ? "Published" : "Draft"}</Badge>
       </div>
 
       {flags.length > 0 && (
@@ -107,10 +117,12 @@ function PreviewContent() {
 
       <div className="px-5 pb-6 pt-2 bg-[#f4f5f7] sticky bottom-0">
         <p className="text-[11px] text-slate-500 text-center mb-2">
-          This is exactly what {formatRupees(offering.pricing.amount)} buyers will see. Nothing publishes without your approval.
+          {isEditingPublished
+            ? "Changes go live immediately for anyone with the link."
+            : `This is exactly what ${formatRupees(offering.pricing.amount)} buyers will see. Nothing publishes without your approval.`}
         </p>
         <Button className="w-full" onClick={handlePublish}>
-          Publish Offering
+          {isEditingPublished ? "Save changes" : "Publish Offering"}
         </Button>
       </div>
     </div>

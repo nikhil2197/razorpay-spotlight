@@ -1,18 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronDown, Link2, Sparkles, ClipboardList } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ChevronDown, Link2, Sparkles, ClipboardList, Share2, Settings } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { BottomNav } from "@/components/BottomNav";
 import { RequireMerchant } from "@/components/RequireMerchant";
 import { useSpotlight } from "@/lib/store";
 import { formatRupees } from "@/lib/utils";
+import { SEED_OFFERING_IDS } from "@/data/seed";
 
 function HomeContent() {
   const { merchant, offerings } = useSpotlight();
+  const router = useRouter();
   if (!merchant) return null;
 
-  const myOfferings = offerings.filter((o) => o.merchantId === merchant.merchantId);
+  // Home shows only the two seeded Spotlights for now — every demo run of the
+  // Create flow would otherwise append another "Adult Beginners Tennis Cohort"
+  // card here. Real per-batch naming (e.g. "Oct MWF Evening Batch") is a
+  // later problem once offerings are meant to accumulate for real.
+  const myOfferings = offerings.filter((o) => o.merchantId === merchant.merchantId && SEED_OFFERING_IDS.includes(o.offeringId));
   const todayCollected = myOfferings.reduce((sum, o) => {
     const filled = o.schedule.batches.reduce((s, b) => s + b.filled, 0);
     return sum + filled * o.pricing.amount;
@@ -82,19 +89,41 @@ function HomeContent() {
           <p className="font-bold text-slate-900 mb-2">Your Spotlights</p>
           <div className="flex flex-col gap-2">
             {myOfferings.map((o) => (
-              <Link
+              <div
                 key={o.offeringId}
-                href={`/roster/${o.offeringId}`}
-                className="bg-white rounded-xl border border-slate-200 p-3 flex items-center justify-between"
+                onClick={() => router.push(`/roster/${o.offeringId}`)}
+                className="bg-white rounded-xl border border-slate-200 p-3 cursor-pointer active:scale-[0.99] transition-transform"
               >
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">{o.title}</p>
-                  <p className="text-xs text-slate-500">{formatRupees(o.pricing.amount)} {o.pricing.unitLabel}</p>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900">{o.title}</p>
+                    <p className="text-xs text-slate-500">{formatRupees(o.pricing.amount)} {o.pricing.unitLabel}</p>
+                  </div>
+                  <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full shrink-0">
+                    {o.status}
+                  </span>
                 </div>
-                <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">
-                  {o.status}
-                </span>
-              </Link>
+                <div className="grid grid-cols-2 gap-2 mt-3">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/create/share?id=${o.offeringId}`);
+                    }}
+                    className="flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 rounded-full py-2"
+                  >
+                    <Share2 size={13} /> Share
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      router.push(`/roster/${o.offeringId}`);
+                    }}
+                    className="flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-blue-600 rounded-full py-2"
+                  >
+                    <Settings size={13} /> Manage
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
         </div>

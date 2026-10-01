@@ -2,7 +2,7 @@
 
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Check, X, ShieldAlert } from "lucide-react";
+import { ArrowLeft, Check, X, ShieldAlert, ExternalLink, Pencil, MessageSquareHeart, CalendarX } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { RequireMerchant } from "@/components/RequireMerchant";
 import { Button, Card, Badge } from "@/components/ui";
@@ -15,9 +15,12 @@ const RENEWAL_LABEL: Record<string, { label: string; tone: "amber" | "green" | "
 };
 
 function RosterContent({ offeringId }: { offeringId: string }) {
-  const { merchant, getOffering, rosterFor, setAttendance, cancelAndRefundAll } = useSpotlight();
+  const { merchant, getOffering, rosterFor, setAttendance, requestReview, cancelAndRefundAll, cancelBatchNextSession } =
+    useSpotlight();
   const router = useRouter();
   const [confirmCancel, setConfirmCancel] = useState(false);
+  const [confirmCancelBatchId, setConfirmCancelBatchId] = useState<string | null>(null);
+  const [toast, setToast] = useState<string | null>(null);
 
   const offering = getOffering(offeringId);
   const records = rosterFor(offeringId);
@@ -28,6 +31,14 @@ function RosterContent({ offeringId }: { offeringId: string }) {
 
   const totalCapacity = offering.schedule.batches.reduce((s, b) => s + b.capacity, 0);
   const totalFilled = offering.schedule.batches.reduce((s, b) => s + b.filled, 0);
+  const isRecurring = offering.offeringType === "recurring_batch";
+  const fullLink = typeof window !== "undefined" ? `${window.location.origin}/p/${merchant.merchantId}/${offering.slug}` : "";
+
+  function handleRequestReview(bookingId: string, studentName: string) {
+    requestReview(bookingId);
+    setToast(`WhatsApp review request sent to ${studentName}`);
+    setTimeout(() => setToast(null), 2200);
+  }
 
   return (
     <div className="flex-1 flex flex-col">
@@ -36,6 +47,23 @@ function RosterContent({ offeringId }: { offeringId: string }) {
           <ArrowLeft size={20} />
         </button>
         <h1 className="text-lg font-bold text-slate-900 truncate">{offering.title}</h1>
+      </div>
+
+      <div className="px-5 grid grid-cols-2 gap-2 mb-3">
+        <Button
+          variant="outline"
+          className="w-full flex items-center justify-center gap-1.5 !py-2"
+          onClick={() => window.open(fullLink, "_blank", "noopener,noreferrer")}
+        >
+          <ExternalLink size={14} /> View Link
+        </Button>
+        <Button
+          variant="secondary"
+          className="w-full flex items-center justify-center gap-1.5 !py-2"
+          onClick={() => router.push(`/create/preview?id=${offeringId}`)}
+        >
+          <Pencil size={14} /> Edit Link
+        </Button>
       </div>
 
       <div className="px-5">
@@ -61,7 +89,7 @@ function RosterContent({ offeringId }: { offeringId: string }) {
                 <div>
                   <p className="text-sm font-semibold text-slate-900">{r.studentName}</p>
                   <p className="text-[11px] text-slate-500">{r.bookingId} {batch ? `· ${batch.label}` : ""}</p>
-                  <div className="flex items-center gap-1.5 mt-1.5">
+                  <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
                     <Badge tone={canceled ? "red" : "green"}>
                       {canceled ? "Canceled (Auto-Refunded)" : `Paid via ${r.payment.method}`}
                     </Badge>
@@ -71,24 +99,33 @@ function RosterContent({ offeringId }: { offeringId: string }) {
                         {r.operations.attendance === "UNMARKED" ? "Attending" : r.operations.attendance}
                       </Badge>
                     )}
+                    {!canceled && r.operations.reviewRequested && <Badge tone="blue">Review requested</Badge>}
                   </div>
                 </div>
               </div>
               {!canceled && (
-                <div className="flex gap-2 mt-3">
+                <div className="grid grid-cols-3 gap-1.5 mt-3">
                   <Button
                     variant={r.operations.attendance === "PRESENT" ? "primary" : "secondary"}
-                    className="flex-1 flex items-center justify-center gap-1 !py-1.5"
+                    className="flex items-center justify-center gap-1 !py-1.5 !px-1.5 text-[12px]"
                     onClick={() => setAttendance(r.bookingId, "PRESENT")}
                   >
-                    <Check size={14} /> Present
+                    <Check size={13} /> Present
                   </Button>
                   <Button
                     variant={r.operations.attendance === "ABSENT" ? "danger" : "secondary"}
-                    className="flex-1 flex items-center justify-center gap-1 !py-1.5"
+                    className="flex items-center justify-center gap-1 !py-1.5 !px-1.5 text-[12px]"
                     onClick={() => setAttendance(r.bookingId, "ABSENT")}
                   >
-                    <X size={14} /> Absent
+                    <X size={13} /> Absent
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    disabled={r.operations.reviewRequested}
+                    className="flex items-center justify-center gap-1 !py-1.5 !px-1.5 text-[12px]"
+                    onClick={() => handleRequestReview(r.bookingId, r.studentName)}
+                  >
+                    <MessageSquareHeart size={13} /> {r.operations.reviewRequested ? "Requested" : "Review"}
                   </Button>
                 </div>
               )}
@@ -100,10 +137,46 @@ function RosterContent({ offeringId }: { offeringId: string }) {
         )}
       </div>
 
-      <div className="px-5 pb-6 pt-4 mt-auto">
-        {!confirmCancel ? (
+      <div className="px-5 pb-6 pt-4 mt-auto flex flex-col gap-2">
+        {isRecurring ? (
+          offering.schedule.batches.map((b) =>
+            confirmCancelBatchId === b.id ? (
+              <Card key={b.id} className="border-red-200">
+                <p className="text-sm font-semibold text-slate-900">Cancel {b.label}&apos;s next session?</p>
+                <p className="text-xs text-slate-500 mt-1">
+                  Only {b.nextSessionLabel ?? "the next upcoming"} session is canceled — the monthly cohort continues after that.
+                  Attending students for this batch will be automatically refunded for that session via Razorpay.
+                </p>
+                <div className="flex gap-2 mt-3">
+                  <Button variant="secondary" className="flex-1" onClick={() => setConfirmCancelBatchId(null)}>
+                    Keep it
+                  </Button>
+                  <Button
+                    variant="danger"
+                    className="flex-1"
+                    onClick={() => {
+                      cancelBatchNextSession(offeringId, b.id);
+                      setConfirmCancelBatchId(null);
+                    }}
+                  >
+                    Confirm & refund
+                  </Button>
+                </div>
+              </Card>
+            ) : (
+              <Button
+                key={b.id}
+                variant="danger"
+                className="w-full flex items-center justify-center gap-2"
+                onClick={() => setConfirmCancelBatchId(b.id)}
+              >
+                <CalendarX size={16} /> Cancel next session · {b.label}{b.nextSessionLabel ? ` (${b.nextSessionLabel})` : ""}
+              </Button>
+            )
+          )
+        ) : !confirmCancel ? (
           <Button variant="danger" className="w-full flex items-center justify-center gap-2" onClick={() => setConfirmCancel(true)}>
-            <ShieldAlert size={16} /> Cancel Session & Batch-Refund All
+            <ShieldAlert size={16} /> Cancel Session & Refund All
           </Button>
         ) : (
           <Card className="border-red-200">
@@ -127,6 +200,12 @@ function RosterContent({ offeringId }: { offeringId: string }) {
           </Card>
         )}
       </div>
+
+      {toast && (
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg z-50">
+          {toast}
+        </div>
+      )}
     </div>
   );
 }

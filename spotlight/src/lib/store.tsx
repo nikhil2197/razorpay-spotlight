@@ -47,7 +47,9 @@ type SpotlightContextValue = {
   getOffering: (offeringId: string) => SpotlightOffering | undefined;
   rosterFor: (offeringId: string) => RosterRecord[];
   setAttendance: (bookingId: string, attendance: AttendanceStatus) => void;
+  requestReview: (bookingId: string) => void;
   cancelAndRefundAll: (offeringId: string) => void;
+  cancelBatchNextSession: (offeringId: string, batchId: string) => void;
   bookSlot: (offeringId: string, batchId: string | undefined, studentName: string, studentPhone: string) => RosterRecord;
 };
 
@@ -103,10 +105,31 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
     setRoster((prev) => prev.map((r) => (r.bookingId === bookingId ? { ...r, operations: { ...r.operations, attendance } } : r)));
   }, []);
 
+  const requestReview = useCallback((bookingId: string) => {
+    setRoster((prev) =>
+      prev.map((r) => (r.bookingId === bookingId ? { ...r, operations: { ...r.operations, reviewRequested: true } } : r))
+    );
+  }, []);
+
   const cancelAndRefundAll = useCallback((offeringId: string) => {
     setRoster((prev) =>
       prev.map((r) =>
         r.offeringId === offeringId
+          ? {
+              ...r,
+              payment: { ...r.payment, status: "REFUNDED" as const },
+              operations: { ...r.operations, bookingStatus: "CANCELED" as const },
+            }
+          : r
+      )
+    );
+  }, []);
+
+  /** Recurring batches cancel/refund only the next upcoming occurrence of one batch, not the whole offering. */
+  const cancelBatchNextSession = useCallback((offeringId: string, batchId: string) => {
+    setRoster((prev) =>
+      prev.map((r) =>
+        r.offeringId === offeringId && r.batchId === batchId
           ? {
               ...r,
               payment: { ...r.payment, status: "REFUNDED" as const },
@@ -126,7 +149,7 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
         studentName,
         studentPhone,
         payment: { status: "PAID", method: "UPI", vpaApp: "GooglePay", paidAt: new Date().toISOString() },
-        operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE" },
+        operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
       };
       setRoster((prev) => [...prev, record]);
       setOfferings((prev) =>
@@ -159,7 +182,9 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
     getOffering,
     rosterFor,
     setAttendance,
+    requestReview,
     cancelAndRefundAll,
+    cancelBatchNextSession,
     bookSlot,
   };
 
