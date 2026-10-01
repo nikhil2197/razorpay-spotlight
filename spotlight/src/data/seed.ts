@@ -66,9 +66,9 @@ export const OFFERINGS: SpotlightOffering[] = [
       heroImages: ["/offerings/tennis-1.svg", "/offerings/tennis-2.svg"],
     },
     copy: {
-      tagline: "Group tennis coaching for adult beginners, 3 days a week at KSLTA.",
+      tagline: "Beginner tennis coaching at KSLTA — small groups, real technique, zero pressure.",
       longDescription:
-        "No experience needed. Small groups of up to 4, full warm-up to rally-ready progression, with floodlit courts and parking on-site.",
+        "Never picked up a racket? Perfect. Groups capped at 4 mean real coaching, not crowd drills — from your first serve to a steady rally. Floodlit courts, on-site parking, and a racket on loan for class one. Morning and evening batches run 3 days a week, and a seat is only yours once it's paid for — so the slot you want may not wait.",
     },
   },
   {
@@ -102,9 +102,9 @@ export const OFFERINGS: SpotlightOffering[] = [
       heroImages: ["/offerings/mma-1.svg", "/offerings/mma-2.svg"],
     },
     copy: {
-      tagline: "Learn from real jiu jitsu fighters — no prior experience needed.",
+      tagline: "One session. Zero experience needed. Real jiu jitsu, taught right.",
       longDescription:
-        "Grappling isn't just about fighting; it's about how we treat the room, our partners, and ourselves.",
+        "You don't need to be fit, flexible, or fearless — just curious. In this 2-hour intro, coaches who actually compete walk you through real positions, submissions, and defensive fundamentals, in a room built on respect, not ego. Gi and all equipment provided. Just 12 spots for Tuesday, Oct 7 — once they're booked, they're booked.",
     },
   },
 ];
