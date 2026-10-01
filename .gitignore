@@ -1,0 +1,11 @@
+.DS_Store
+*.log
+
+# Confidential — marked "For ISB Campus Circulation Only", never push publicly
+product_note/RazorpayxISB_BuildChallenge.docx\ (1).pdf
+
+# Identifies a real third-party business by name in screenshots — keep local only
+product_images/
+
+# Real names/handles for the author's own records — the public version is USER_RESEARCH.md
+product_note/USER_RESEARCH_PRIVATE.md

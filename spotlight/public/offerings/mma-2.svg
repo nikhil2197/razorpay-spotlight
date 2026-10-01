@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0f172a"/>
+  <circle cx="220" cy="130" r="50" fill="#dc2626" opacity="0.8"/>
+  <circle cx="580" cy="370" r="70" fill="#dc2626" opacity="0.4"/>
+  <text x="400" y="260" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#ffffff" text-anchor="middle" font-weight="700">Intro to Jiu Jitsu</text>
+</svg>

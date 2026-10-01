@@ -1,0 +1,412 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fswiss\fcharset0 Helvetica-Bold;\f2\fnil\fcharset0 Menlo-Regular;
+\f3\fnil\fcharset0 LucidaGrande;\f4\fnil\fcharset134 PingFangSC-Regular;}
+{\colortbl;\red255\green255\blue255;\red24\green24\blue24;\red255\green255\blue255;\red16\green16\blue16;
+\red183\green187\blue184;\red0\green0\blue0;\red239\green236\blue236;\red0\green0\blue0;\red252\green125\blue209;
+\red83\green209\blue96;}
+{\*\expandedcolortbl;;\cssrgb\c12157\c12157\c12157;\cssrgb\c100000\c100000\c100000;\cssrgb\c7843\c7843\c7843;
+\cssrgb\c76863\c78039\c77255;\cssrgb\c0\c0\c0\c54902;\cssrgb\c94902\c94118\c94118;\cssrgb\c0\c0\c0;\cssrgb\c100000\c58824\c85490;
+\cssrgb\c37647\c83922\c45098;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid201\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{circle\}}{\leveltext\leveltemplateid202\'01\uc0\u9702 ;}{\levelnumbers;}\fi-360\li1440\lin1440 }{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid301\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid4}
+{\list\listtemplateid5\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid401\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid5}
+{\list\listtemplateid6\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}}{\leveltext\leveltemplateid501\'01\'00;}{\levelnumbers\'01;}\fi-360\li720\lin720 }{\listname ;}\listid6}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}{\listoverride\listid5\listoverridecount0\ls5}{\listoverride\listid6\listoverridecount0\ls6}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab720
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs48 \cf2 PART 2: TECHNICAL ARCHITECTURE DOCUMENT\
+\pard\pardeftab720\partightenfactor0
+
+\fs36 \cf2 1. Architectural Principles & Constraints\
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs24 \cf2 To guarantee high performance, rapid iteration, and zero infrastructure overhead during evaluation:\
+\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0
+\f1\b \cf2 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Zero Database Server:
+\f0\b0  No MongoDB, PostgreSQL, or DynamoDB instances to provision or manage.\uc0\u8232 \
+\ls2\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Zero Persistent Compute Backend:
+\f0\b0  No custom Node/Python backend servers or Docker containers.\uc0\u8232 \
+\ls2\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Deterministic Presentation Engine:
+\f0\b0  Real-time client-side parsing backed by structured schema mapping to eliminate external LLM latency, token failures, or unexpected API rate limits during live evaluation.\uc0\u8232 \
+\ls2\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Single-Engine Web Stack:
+\f0\b0  Next.js 14 deployed entirely on Vercel edge/serverless infrastructure.\uc0\u8232 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs36 \cf2 2. High-Level System Architecture Diagram\
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs28 \cf3 \cb4 \uc0\u9484 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9488 \
+\uc0\u9474                                    CLIENT BROWSER                                      \u9474 \
+\uc0\u9474                                                                                         \u9474 \
+\uc0\u9474   \u9484 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9488           \u9484 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9488   \u9474 \
+\uc0\u9474   \u9474          UI Layer (Next.js)      \u9474           \u9474        Audio & Parser Engine        \u9474   \u9474 \
+\uc0\u9474   \u9474   - Tailwind CSS Styling         \u9474           \u9474   - Web Speech API (Native STT)     \u9474   \u9474 \
+\uc0\u9474   \u9474   - Mobile Viewport Frame (390px)\u9474  
+\f2 \uc0\u9668 
+\f0 \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 
+\f3 \uc0\u9658 
+\f0  \uc0\u9474   - Client Pattern Matcher          \u9474   \u9474 \
+\uc0\u9474   \u9474   - Shadcn / Lucide Componentry  \u9474           \u9474   - Deterministic Fallback Seed     \u9474   \u9474 \
+\uc0\u9474   \u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 
+\f4 \'a9\'d0
+\f0 \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9496           \u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 
+\f4 \'a9\'d0
+\f0 \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9496   \u9474 \
+\uc0\u9474                    \u9474                                              \u9474                      \u9474 \
+\uc0\u9474                    
+\f3 \uc0\u9660 
+\f0                                              
+\f3 \uc0\u9660 
+\f0                      \uc0\u9474 \
+\uc0\u9474   \u9484 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9488   \u9474 \
+\uc0\u9474   \u9474                            Client State Management                               \u9474   \u9474 \
+\uc0\u9474   \u9474   - React Context (Session Store)                                                \u9474   \u9474 \
+\uc0\u9474   \u9474   - HTML5 LocalStorage (Attendance toggles, state persistence across tabs)       \u9474   \u9474 \
+\uc0\u9474   \u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9496   \u9474 \
+\uc0\u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 
+\f4 \'a9\'d0
+\f0 \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9496 \
+                                            \uc0\u9474 \
+                                            
+\f3 \uc0\u9660 
+\f0 \
+\uc0\u9484 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9488 \
+\uc0\u9474                               HOSTING & DISTRIBUTION                                    \u9474 \
+\uc0\u9474   - Vercel Edge Network (Global CDN, instant sub-second page loads)                     \u9474 \
+\uc0\u9474   - Zero backend dependencies; zero API key exposure                                    \u9474 \
+\uc0\u9492 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9496 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs36 \cf2 \cb1 3. Technology Stack\
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \tamarb640 \trbrdrt\brdrnil \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth1580\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx2880
+\clvertalc \clshdrawnil \clwWidth4364\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx5760
+\clvertalc \clshdrawnil \clwWidth8016\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\fs24 \cf2 Layer
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Selected Technology
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Technical Rationale
+\f0\b0 \cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \tamarb640 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth1580\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx2880
+\clvertalc \clshdrawnil \clwWidth4364\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx5760
+\clvertalc \clshdrawnil \clwWidth8016\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Framework
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Next.js 14 (App Router)
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf2 Industry standard for low-code/v0 deployment, serverless route support, fast compilation.\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \tamarb640 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth1580\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx2880
+\clvertalc \clshdrawnil \clwWidth4364\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx5760
+\clvertalc \clshdrawnil \clwWidth8016\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Styling & Components
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Tailwind CSS + Lucide Icons
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf2 Ultra-responsive, native mobile look and feel; compact bundle footprint.\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \tamarb640 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth1580\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx2880
+\clvertalc \clshdrawnil \clwWidth4364\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx5760
+\clvertalc \clshdrawnil \clwWidth8016\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Speech-to-Text
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 HTML5 Web Speech API (
+\f0\b0\fs30 \cf6 \cb7 webkitSpeechRecognition
+\f1\b\fs24 \cf2 \cb1 )
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf2 Runs 100% on-device in mobile Safari and Chrome. Zero API tokens, zero network latency, zero operational cost.\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \tamarb640 \trbrdrl\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth1580\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx2880
+\clvertalc \clshdrawnil \clwWidth4364\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx5760
+\clvertalc \clshdrawnil \clwWidth8016\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 State Storage
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 React Context + 
+\f0\b0\fs30 \cf6 \cb7 window.localStorage
+\fs24 \cf2 \cb1 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf2 Retains modified roster states (attendance marks, cancellations) directly in the browser across page refreshes.\cell \row
+
+\itap1\trowd \taflags0 \trgaph108\trleft-108 \tamarb640 \trbrdrl\brdrnil \trbrdrt\brdrnil \trbrdrr\brdrnil 
+\clvertalc \clshdrawnil \clwWidth1580\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx2880
+\clvertalc \clshdrawnil \clwWidth4364\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx5760
+\clvertalc \clshdrawnil \clwWidth8016\clftsWidth3 \clmart10 \clmarl10 \clmarb10 \clmarr10 \clbrdrt\brdrs\brdrw20\brdrcf5 \clbrdrl\brdrs\brdrw20\brdrcf5 \clbrdrb\brdrs\brdrw20\brdrcf5 \clbrdrr\brdrs\brdrw20\brdrcf5 \clpadt160 \clpadl240 \clpadb160 \clpadr240 \gaph\cellx8640
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Hosting & Deployment
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+
+\f1\b \cf2 Vercel
+\f0\b0 \cell 
+\pard\intbl\itap1\pardeftab720\partightenfactor0
+\cf2 Single-click deployment via v0 or Git, providing a live public HTTPS URL for evaluator testing.\cell \lastrow\row
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs36 \cf2 4. Core Data Schemas\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 4.1. Merchant Session Schema\
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs24 \cf3 \cb4 JSON\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\fs48 \cf0 \
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf3 \cb4 \{\
+  \cf9 "merchantId"\cf3 : \cf10 "manjunath-tennis"\cf3 ,\
+  \cf9 "name"\cf3 : \cf10 "Manjunath Tennis Academy"\cf3 ,\
+  \cf9 "facility"\cf3 : \cf10 "KSLTA Tennis Stadium, Cubbon Park"\cf3 ,\
+  \cf9 "city"\cf3 : \cf10 "Bengaluru"\cf3 ,\
+  \cf9 "isVerified"\cf3 : \cf9 true\cf3 ,\
+  \cf9 "upiVpa"\cf3 : \cf10 "kslta.manjunath@razorpay"\cf3 ,\
+  \cf9 "category"\cf3 : \cf10 "sports_academy"\cf3 \
+\}\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb1 4.2. Spotlight Offering Schema (Generated from Speech)\
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs24 \cf3 \cb4 JSON\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\fs48 \cf0 \
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf3 \cb4 \{\
+  \cf9 "offeringId"\cf3 : \cf10 "spotlight-tennis-nov"\cf3 ,\
+  \cf9 "merchantId"\cf3 : \cf10 "manjunath-tennis"\cf3 ,\
+  \cf9 "title"\cf3 : \cf10 "Adult Beginners Tennis Cohort"\cf3 ,\
+  \cf9 "offeringType"\cf3 : \cf10 "recurring_batch"\cf3 ,\
+  \cf9 "pricing"\cf3 : \{\
+    \cf9 "amount"\cf3 : \cf9 3000\cf3 ,\
+    \cf9 "currency"\cf3 : \cf10 "INR"\cf3 ,\
+    \cf9 "cadence"\cf3 : \cf10 "monthly"\cf3 \
+  \},\
+  \cf9 "schedule"\cf3 : \{\
+    \cf9 "days"\cf3 : [\cf10 "Monday"\cf3 , \cf10 "Wednesday"\cf3 , \cf10 "Friday"\cf3 , \cf10 "Tuesday"\cf3 , \cf10 "Thursday"\cf3 , \cf10 "Saturday"\cf3 ],\
+    \cf9 "batches"\cf3 : [\
+      \{ \cf9 "id"\cf3 : \cf10 "b1"\cf3 , \cf9 "label"\cf3 : \cf10 "Morning Batch"\cf3 , \cf9 "timing"\cf3 : \cf10 "06:30 - 08:00 AM"\cf3 , \cf9 "capacity"\cf3 : \cf9 4\cf3 , \cf9 "filled"\cf3 : \cf9 3\cf3  \},\
+      \{ \cf9 "id"\cf3 : \cf10 "b2"\cf3 , \cf9 "label"\cf3 : \cf10 "Evening Batch"\cf3 , \cf9 "timing"\cf3 : \cf10 "07:00 - 08:30 PM"\cf3 , \cf9 "capacity"\cf3 : \cf9 4\cf3 , \cf9 "filled"\cf3 : \cf9 2\cf3  \}\
+    ]\
+  \},\
+  \cf9 "logistics"\cf3 : \{\
+    \cf9 "equipmentPolicy"\cf3 : \cf10 "Balls provided. Racket available for class 1; discounted purchase support thereafter."\cf3 ,\
+    \cf9 "amenities"\cf3 : [\cf10 "Floodlights"\cf3 , \cf10 "Locker Rooms"\cf3 , \cf10 "Parking"\cf3 ]\
+  \},\
+  \cf9 "syllabus"\cf3 : [\
+    \cf10 "Warm-up & footwork fundamentals"\cf3 ,\
+    \cf10 "Forehand and backhand stroke mechanics"\cf3 ,\
+    \cf10 "Rally consistency drills"\cf3 ,\
+    \cf10 "Cool-down & equipment guidance"\cf3 \
+  ],\
+  \cf9 "policy"\cf3 : \{\
+    \cf9 "refundTerms"\cf3 : \cf10 "Full refund if canceled 24 hours prior to cohort start."\cf3 ,\
+    \cf9 "rescheduleTerms"\cf3 : \cf10 "Make-up sessions permitted within the calendar month subject to court availability."\cf3 \
+  \}\
+\}\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b \cf2 \cb1 4.3. Student Roster Record Schema\
+\pard\pardeftab720\partightenfactor0
+
+\f0\b0\fs24 \cf3 \cb4 JSON\cb1 \
+\pard\pardeftab720\qc\partightenfactor0
+
+\fs48 \cf0 \
+\
+\
+\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf3 \cb4 \{\
+  \cf9 "bookingId"\cf3 : \cf10 "bk_982341"\cf3 ,\
+  \cf9 "offeringId"\cf3 : \cf10 "spotlight-tennis-nov"\cf3 ,\
+  \cf9 "batchId"\cf3 : \cf10 "b1"\cf3 ,\
+  \cf9 "studentName"\cf3 : \cf10 "Arjun Rao"\cf3 ,\
+  \cf9 "studentPhone"\cf3 : \cf10 "+91 98450 12345"\cf3 ,\
+  \cf9 "payment"\cf3 : \{\
+    \cf9 "status"\cf3 : \cf10 "PAID"\cf3 ,\
+    \cf9 "method"\cf3 : \cf10 "UPI"\cf3 ,\
+    \cf9 "vpaApp"\cf3 : \cf10 "GooglePay"\cf3 ,\
+    \cf9 "paidAt"\cf3 : \cf10 "2026-10-01T08:30:00Z"\cf3 \
+  \},\
+  \cf9 "operations"\cf3 : \{\
+    \cf9 "attendance"\cf3 : \cf10 "PRESENT"\cf3 ,\
+    \cf9 "bookingStatus"\cf3 : \cf10 "ATTENDING"\cf3 ,\
+    \cf9 "renewalStatus"\cf3 : \cf10 "DUE_IN_7_DAYS"\cf3 \
+  \}\
+\}\
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs36 \cf2 \cb1 5. Subsystem Workflows & Technical Handshakes\
+\pard\pardeftab720\partightenfactor0
+
+\fs28 \cf2 5.1. Voice Transcription & Parsing Engine\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\fs24 \cf2 \kerning1\expnd0\expndtw0 {\listtext	1	}\expnd0\expndtw0\kerning0
+Audio Capture:
+\f0\b0  The client invokes 
+\fs30 \cf6 \cb7 webkitSpeechRecognition
+\fs24 \cf2 \cb1  with the locale set to 
+\fs30 \cf6 \cb7 en-IN
+\fs24 \cf2 \cb1 .\uc0\u8232 \
+\ls3\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	2	}\expnd0\expndtw0\kerning0
+Streaming Feedback:
+\f0\b0  Recognized tokens are pushed directly to a transcript state variable, rendering text live in the viewport.\uc0\u8232 \
+\ls3\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	3	}\expnd0\expndtw0\kerning0
+Extraction & Normalization:
+\f0\b0 \uc0\u8232 \
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\partightenfactor0
+\ls3\ilvl1\cf2 \kerning1\expnd0\expndtw0 {\listtext	
+\f3 \uc0\u9702 
+\f0 	}\expnd0\expndtw0\kerning0
+An internal pattern classifier evaluates the transcript against pre-defined regex anchors (e.g., matching keywords: 
+\fs30 \cf6 \cb7 tennis
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 kslta
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 jiu jitsu
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 mma
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 3000
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 1000
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 morning
+\fs24 \cf2 \cb1 , 
+\fs30 \cf6 \cb7 evening
+\fs24 \cf2 \cb1 ).\uc0\u8232 \
+\ls3\ilvl1\kerning1\expnd0\expndtw0 {\listtext	
+\f3 \uc0\u9702 
+\f0 	}\expnd0\expndtw0\kerning0
+When key tokens are identified, the engine binds the transcript to the verified offering schema.\uc0\u8232 \
+\ls3\ilvl1\kerning1\expnd0\expndtw0 {\listtext	
+\f3 \uc0\u9702 
+\f0 	}\expnd0\expndtw0\kerning0
+If ambient noise prevents clear audio capture, the 
+\f1\b "Paste Transcript"
+\f0\b0  fallback injects the canonical script directly into the parser.\uc0\u8232 \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls3\ilvl0
+\f1\b \cf2 \kerning1\expnd0\expndtw0 {\listtext	4	}\expnd0\expndtw0\kerning0
+Enrichment:
+\f0\b0  The engine injects pre-structured metadata (curriculum steps, high-resolution category images, cancellation policy) into the active session object.\uc0\u8232 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs28 \cf2 5.2. Published Page Generation\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls4\ilvl0
+\f0\b0\fs24 \cf2 \kerning1\expnd0\expndtw0 {\listtext	1	}\expnd0\expndtw0\kerning0
+The structured offering schema is committed to the local state store under a unique slug (e.g., 
+\fs30 \cf6 \cb7 /p/manjunath-tennis
+\fs24 \cf2 \cb1 ).\uc0\u8232 \
+\ls4\ilvl0\kerning1\expnd0\expndtw0 {\listtext	2	}\expnd0\expndtw0\kerning0
+The UI transitions to the Luma-style template view populated directly from the state payload.\uc0\u8232 \
+\ls4\ilvl0\kerning1\expnd0\expndtw0 {\listtext	3	}\expnd0\expndtw0\kerning0
+Trust badges (Razorpay Verified Shield, Instant Refund Guarantee) render based on the merchant profile configuration.\uc0\u8232 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs28 \cf2 5.3. Roster & Attendance Engine\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls5\ilvl0
+\f0\b0\fs24 \cf2 \kerning1\expnd0\expndtw0 {\listtext	1	}\expnd0\expndtw0\kerning0
+Selecting 
+\f1\b Manage Rosters
+\f0\b0  reads the current offering record and associated student roster.\uc0\u8232 \
+\ls5\ilvl0\kerning1\expnd0\expndtw0 {\listtext	2	}\expnd0\expndtw0\kerning0
+Tapping 
+\f1\b "Mark Present"
+\f0\b0  or 
+\f1\b "Mark Absent"
+\f0\b0  updates the student record in 
+\fs30 \cf6 \cb7 localStorage
+\fs24 \cf2 \cb1 .\uc0\u8232 \
+\ls5\ilvl0\kerning1\expnd0\expndtw0 {\listtext	3	}\expnd0\expndtw0\kerning0
+Tapping 
+\f1\b "Cancel Session & Batch-Refund All"
+\f0\b0  updates all student statuses to 
+\fs30 \cf6 \cb7 Canceled (Auto-Refunded)
+\fs24 \cf2 \cb1  and displays a success toast confirming payment reversal.\uc0\u8232 \
+\pard\pardeftab720\partightenfactor0
+
+\f1\b\fs36 \cf2 6. Implementation & Deployment Strategy\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls6\ilvl0
+\fs24 \cf2 \kerning1\expnd0\expndtw0 {\listtext	1	}\expnd0\expndtw0\kerning0
+Mobile Shell Construction:
+\f0\b0  Implement the interface locked inside an iOS/Android viewport frame (
+\fs30 \cf6 \cb7 max-w-[420px] mx-auto min-h-screen bg-slate-50
+\fs24 \cf2 \cb1 ) to maintain a native mobile experience on desktop evaluators' screens.\uc0\u8232 \
+\ls6\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	2	}\expnd0\expndtw0\kerning0
+State Hydration:
+\f0\b0  Initialize default values from a static JSON dictionary. All mutate operations write back to 
+\fs30 \cf6 \cb7 localStorage
+\fs24 \cf2 \cb1 .\uc0\u8232 \
+\ls6\ilvl0
+\f1\b \kerning1\expnd0\expndtw0 {\listtext	3	}\expnd0\expndtw0\kerning0
+Vercel Deployment:
+\f0\b0  Push the repository to Vercel. Provide the production URL directly to the judging panel with zero environment variables or third-party API dependencies required.\
+}
