@@ -41,7 +41,7 @@ export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"]
  * any saved session silently never sees new seed content again, since the
  * persisted copy always wins once it exists.
  */
-export const SEED_VERSION = 4;
+export const SEED_VERSION = 5;
 
 export const OFFERINGS: SpotlightOffering[] = [
   {
@@ -113,7 +113,7 @@ export const OFFERINGS: SpotlightOffering[] = [
       rescheduleTerms: "One free reschedule to the next scheduled intro session.",
     },
     media: {
-      heroImages: ["/offerings/mma-1.svg", "/offerings/mma-2.svg"],
+      heroImages: ["/offerings/mma-sparring.jpg", "/offerings/mma-group.jpg", "/offerings/mma-gloves.jpg"],
     },
     copy: {
       tagline: "One session. Zero experience needed. Real jiu jitsu, taught right.",
