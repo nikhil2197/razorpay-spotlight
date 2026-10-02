@@ -4,6 +4,11 @@ Prototype for the **Razorpay AI x PM Build Challenge (ISB)**, Track 1 — "Razor
 
 **One line:** turn a merchant's offering into a bookable, paid slot — describe it once, publish a trusted booking page, get paid by UPI, run the day from one roster.
 
+## Live demo
+
+- **https://nikhilrazorpayspotlight.site/** — primary link
+- **https://temporary-rapid-ochre-3qnhjes.vercel.app/** — same deployment on the `.vercel.app` domain; use this if your network blocks or hasn't yet recognized the custom domain
+
 ## Repo layout
 
 ```
