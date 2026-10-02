@@ -41,7 +41,7 @@ export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"]
  * any saved session silently never sees new seed content again, since the
  * persisted copy always wins once it exists.
  */
-export const SEED_VERSION = 6;
+export const SEED_VERSION = 7;
 
 export const OFFERINGS: SpotlightOffering[] = [
   {
@@ -144,7 +144,7 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Priya Nair",
     studentPhone: "+91 98450 22345",
     payment: { status: "PAID", method: "UPI", vpaApp: "PhonePe", paidAt: "2026-09-27T09:10:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
+    operations: { attendance: "ABSENT", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
   {
     bookingId: "bk_982343",
@@ -153,7 +153,16 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Devika Shetty",
     studentPhone: "+91 98450 32345",
     payment: { status: "PAID", method: "UPI", vpaApp: "Paytm", paidAt: "2026-09-26T07:40:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "RENEWED", reviewRequested: false },
+    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "RENEWED", reviewRequested: true },
+  },
+  {
+    bookingId: "bk_982346",
+    offeringId: "spotlight-tennis-nov",
+    batchId: "b1",
+    studentName: "Meera Pillai",
+    studentPhone: "+91 98450 62345",
+    payment: { status: "REFUNDED", method: "UPI", vpaApp: "GooglePay", paidAt: "2026-09-24T07:00:00Z" },
+    operations: { attendance: "UNMARKED", bookingStatus: "CANCELED", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
   {
     bookingId: "bk_982344",
@@ -189,7 +198,16 @@ export const ROSTER: RosterRecord[] = [
     studentName: "Sana Khan",
     studentPhone: "+91 99000 22334",
     payment: { status: "PAID", method: "UPI", vpaApp: "Paytm", paidAt: "2026-09-29T12:15:00Z" },
-    operations: { attendance: "UNMARKED", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
+    operations: { attendance: "PRESENT", bookingStatus: "ATTENDING", renewalStatus: "NOT_APPLICABLE", reviewRequested: true },
+  },
+  {
+    bookingId: "bk_771203",
+    offeringId: "spotlight-mma-intro",
+    batchId: "b1",
+    studentName: "Priyanka Das",
+    studentPhone: "+91 99000 33445",
+    payment: { status: "REFUNDED", method: "UPI", vpaApp: "PhonePe", paidAt: "2026-09-28T10:00:00Z" },
+    operations: { attendance: "UNMARKED", bookingStatus: "CANCELED", renewalStatus: "NOT_APPLICABLE", reviewRequested: false },
   },
 ];
 
