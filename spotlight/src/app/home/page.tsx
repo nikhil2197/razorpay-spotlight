@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronDown, Link2, Sparkles, ClipboardList, Share2, Settings } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, Link2, Sparkles, ClipboardList, Share2, Settings, Copy } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { BottomNav } from "@/components/BottomNav";
 import { RequireMerchant } from "@/components/RequireMerchant";
@@ -13,7 +14,13 @@ import { SEED_OFFERING_IDS } from "@/data/seed";
 function HomeContent() {
   const { merchant, offerings, roster } = useSpotlight();
   const router = useRouter();
+  const [toast, setToast] = useState<string | null>(null);
   if (!merchant) return null;
+
+  function handleDuplicate(title: string) {
+    setToast(`Duplicate "${title}" — coming soon`);
+    setTimeout(() => setToast(null), 1800);
+  }
 
   // Home shows only the two seeded Spotlights for now — every demo run of the
   // Create flow would otherwise append another "Adult Beginners Tennis Cohort"
@@ -107,24 +114,33 @@ function HomeContent() {
                     {o.status}
                   </span>
                 </div>
-                <div className="grid grid-cols-2 gap-2 mt-3">
+                <div className="grid grid-cols-3 gap-2 mt-3">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       router.push(`/create/share?id=${o.offeringId}`);
                     }}
-                    className="flex items-center justify-center gap-1.5 text-xs font-semibold text-slate-700 bg-slate-100 rounded-full py-2"
+                    className="flex items-center justify-center gap-1 text-[11px] font-semibold text-slate-700 bg-slate-100 rounded-full py-2 px-1"
                   >
-                    <Share2 size={13} /> Share
+                    <Share2 size={12} /> Share
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDuplicate(o.internalLabel ?? o.title);
+                    }}
+                    className="flex items-center justify-center gap-1 text-[11px] font-semibold text-slate-700 bg-slate-100 rounded-full py-2 px-1"
+                  >
+                    <Copy size={12} /> Duplicate
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       router.push(`/roster/${o.offeringId}`);
                     }}
-                    className="flex items-center justify-center gap-1.5 text-xs font-semibold text-white bg-blue-600 rounded-full py-2"
+                    className="flex items-center justify-center gap-1 text-[11px] font-semibold text-white bg-blue-600 rounded-full py-2 px-1"
                   >
-                    <Settings size={13} /> Manage
+                    <Settings size={12} /> Manage
                   </button>
                 </div>
               </div>
@@ -132,6 +148,11 @@ function HomeContent() {
           </div>
         </div>
       </div>
+      {toast && (
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs font-semibold px-4 py-2.5 rounded-full shadow-lg z-50">
+          {toast}
+        </div>
+      )}
       <BottomNav />
     </>
   );
