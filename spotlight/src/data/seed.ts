@@ -41,7 +41,7 @@ export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"]
  * any saved session silently never sees new seed content again, since the
  * persisted copy always wins once it exists.
  */
-export const SEED_VERSION = 5;
+export const SEED_VERSION = 6;
 
 export const OFFERINGS: SpotlightOffering[] = [
   {
@@ -62,18 +62,20 @@ export const OFFERINGS: SpotlightOffering[] = [
     },
     logistics: {
       equipmentPolicy:
-        "Balls provided. Racket available for class 1; discounted purchase support thereafter.",
+        "Balls are provided for every session — just bring water and non-marking court shoes. No racket? Borrow one free for your first class, then get hands-on help picking (and a discount on) your own before class two.",
       amenities: ["Floodlights", "Locker Rooms", "Parking"],
     },
     syllabus: [
-      "Warm-up & footwork fundamentals",
-      "Forehand and backhand stroke mechanics",
-      "Rally consistency drills",
-      "Cool-down & equipment guidance",
+      "10-minute warm-up — footwork ladders and dynamic stretching so you're moving well before the first ball drops.",
+      "Forehand & backhand fundamentals — grip, stance, and swing path broken down stroke by stroke, not just \"hit more balls.\"",
+      "Rally consistency drills — live-ball reps with your coach until a 10+ shot rally feels normal, not lucky.",
+      "Cool-down & gear guidance — a short stretch, plus honest, no-pressure feedback on whether (and which) racket to buy next.",
     ],
     policy: {
-      refundTerms: "Full refund if canceled 24 hours prior to cohort start.",
-      rescheduleTerms: "Make-up sessions permitted within the calendar month subject to court availability.",
+      refundTerms:
+        "Full refund if you cancel at least 24 hours before your cohort's start date — processed automatically to your original payment method, no follow-up needed.",
+      rescheduleTerms:
+        "Miss a session? One make-up class per month is included, subject to court availability — just message your coach to slot it in.",
     },
     media: {
       heroImages: ["/offerings/tennis-1.svg", "/offerings/tennis-2.svg"],
@@ -99,18 +101,20 @@ export const OFFERINGS: SpotlightOffering[] = [
       batches: [{ id: "b1", label: "Single Session", timing: "7:30 - 9:30 PM", capacity: 12 }],
     },
     logistics: {
-      equipmentPolicy: "All equipment provided. Clean gi provided, no prior experience needed.",
+      equipmentPolicy:
+        "All training equipment — gloves, shin guards, and a clean gi — is provided and sanitized between sessions. Just wear something you can move in and bring a water bottle; no gear of your own required.",
       amenities: ["Showers", "Water Station", "Parking"],
     },
     syllabus: [
-      "Fundamental body movements",
-      "Basic positions and submissions",
-      "Defensive awareness",
-      "Safety protocols, fun and play",
+      "Fundamental movement patterns — shrimping, bridging, and hip escapes, the base vocabulary every technique builds on.",
+      "Core positions & submissions — mount, guard, and side control, plus your first submission and how to escape it.",
+      "Defensive awareness — how to stay safe, tap early, and protect yourself on the ground before anything else.",
+      "Safety protocols, then live play — a quick rules refresher, then light positional sparring so it actually sinks in.",
     ],
     policy: {
-      refundTerms: "Full refund if canceled 12 hours prior to session start.",
-      rescheduleTerms: "One free reschedule to the next scheduled intro session.",
+      refundTerms:
+        "Full refund if you cancel at least 12 hours before the session — refunded automatically to your original payment method.",
+      rescheduleTerms: "Can't make it after booking? You get one free reschedule to the next scheduled intro session, no questions asked.",
     },
     media: {
       heroImages: ["/offerings/mma-sparring.jpg", "/offerings/mma-group.jpg", "/offerings/mma-gloves.jpg"],
