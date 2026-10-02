@@ -2,7 +2,7 @@
 
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Check, X, ShieldAlert, ExternalLink, Pencil, MessageSquareHeart, CalendarX } from "lucide-react";
+import { ArrowLeft, Check, X, ShieldAlert, ExternalLink, Pencil, Send, CalendarX } from "lucide-react";
 import { MobileShell } from "@/components/MobileShell";
 import { RequireMerchant } from "@/components/RequireMerchant";
 import { Button, Card, Badge } from "@/components/ui";
@@ -126,7 +126,7 @@ function RosterContent({ offeringId }: { offeringId: string }) {
                     className="flex items-center justify-center gap-1 !py-1.5 !px-1.5 text-[12px]"
                     onClick={() => handleRequestReview(r.bookingId, r.studentName)}
                   >
-                    <MessageSquareHeart size={13} /> {r.operations.reviewRequested ? "Requested" : "Review"}
+                    <Send size={13} /> {r.operations.reviewRequested ? "Asked" : "Ask review"}
                   </Button>
                 </div>
               )}
