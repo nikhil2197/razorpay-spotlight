@@ -13,7 +13,8 @@ RZP/
 │   ├── RazorpayxISB_BuildChallenge.docx (1).pdf # Official challenge brief
 │   ├── PRD.md                      # Screen-by-screen product requirements
 │   ├── TECH_ARCHITECTURE.md        # Stack, schemas, subsystem workflows
-│   └── USER_RESEARCH.md            # Sources & findings behind the problem framing
+│   ├── USER_RESEARCH.md            # Sources & findings behind the problem framing
+│   └── AI_BUILD_LOG.md             # AI usage across the full lifecycle: research → solution → build
 ├── prototype_foundation_docs/      # Original rough drafts (superseded by product_note/*.md)
 ├── product_images/                 # Real Razorpay merchant app screenshots (visual reference)
 └── spotlight/                      # The Next.js prototype
@@ -54,6 +55,6 @@ No Docker, no environment variables. Push to GitHub, import the repo in [Vercel]
 - [x] PRD + tech architecture finalized (`product_note/*.md`)
 - [x] Prototype: all 6 PRD screens + public booking flow, seeded with two personas
 - [x] Pushed to GitHub / deployed to Vercel
-- [ ] Real Luma-page content/images (JSON hand-off) dropped into the offering schema
+- [x] Real Luma-page content/images dropped into the offering schema (tennis + MMA)
+- [x] AI build log (`product_note/AI_BUILD_LOG.md`)
 - [ ] 90-second demo video
-- [ ] AI build log

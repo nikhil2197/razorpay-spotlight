@@ -1,6 +1,6 @@
 # Razorpay Spotlight — Product Requirements Document
 
-> Grounded in four independent sources — see [`USER_RESEARCH.md`](./USER_RESEARCH.md) for full sourcing and attribution.
+> Grounded in four independent sources — see [`USER_RESEARCH.md`](./USER_RESEARCH.md) for full sourcing and attribution. See [`AI_BUILD_LOG.md`](./AI_BUILD_LOG.md) for how AI was used across this entire lifecycle, from research synthesis through to the deployed build.
 
 ## 1. Problem Statement & Opportunity
 
