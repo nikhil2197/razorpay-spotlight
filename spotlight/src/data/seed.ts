@@ -41,7 +41,7 @@ export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"]
  * any saved session silently never sees new seed content again, since the
  * persisted copy always wins once it exists.
  */
-export const SEED_VERSION = 3;
+export const SEED_VERSION = 4;
 
 export const OFFERINGS: SpotlightOffering[] = [
   {
@@ -89,7 +89,7 @@ export const OFFERINGS: SpotlightOffering[] = [
     merchantId: "the-works-mma",
     slug: "intro-jiu-jitsu",
     title: "Intro to Jiu Jitsu",
-    internalLabel: "01/10 batch",
+    internalLabel: "Tuesday, Oct 07",
     offeringType: "single_event",
     status: "published",
     pricing: { amount: 1000, currency: "INR", cadence: "one_time", unitLabel: "/ person" },
