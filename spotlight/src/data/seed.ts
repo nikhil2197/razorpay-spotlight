@@ -41,7 +41,7 @@ export const SEED_OFFERING_IDS = ["spotlight-tennis-nov", "spotlight-mma-intro"]
  * any saved session silently never sees new seed content again, since the
  * persisted copy always wins once it exists.
  */
-export const SEED_VERSION = 7;
+export const SEED_VERSION = 8;
 
 export const OFFERINGS: SpotlightOffering[] = [
   {
@@ -78,7 +78,12 @@ export const OFFERINGS: SpotlightOffering[] = [
         "Miss a session? One make-up class per month is included, subject to court availability — just message your coach to slot it in.",
     },
     media: {
-      heroImages: ["/offerings/tennis-1.svg", "/offerings/tennis-2.svg"],
+      heroImages: [
+        "/offerings/tennis-daytime.jpg",
+        "/offerings/tennis-rally.jpg",
+        "/offerings/tennis-night.jpg",
+        "/offerings/tennis-signage.jpg",
+      ],
     },
     copy: {
       tagline: "Beginner tennis coaching at KSLTA — small groups, real technique, zero pressure.",
