@@ -1,12 +1,51 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { ShieldCheck, MapPin, Star, PackageCheck, RotateCcw, BadgeCheck, Landmark, RefreshCcw, MessageSquareQuote } from "lucide-react";
 import type { Merchant, SpotlightOffering } from "@/lib/types";
-import { formatRupees } from "@/lib/utils";
+import { formatRupees, cn } from "@/lib/utils";
 import { Badge, BottomSheet } from "@/components/ui";
 import { REVIEWS } from "@/data/seed";
+
+function HeroCarousel({ images, alt }: { images: string[]; alt: string }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+
+  function handleScroll() {
+    const el = scrollerRef.current;
+    if (!el) return;
+    const index = Math.round(el.scrollLeft / el.clientWidth);
+    setActiveIndex(index);
+  }
+
+  return (
+    <>
+      <div
+        ref={scrollerRef}
+        onScroll={handleScroll}
+        className="h-full w-full flex overflow-x-auto snap-x snap-mandatory"
+        style={{ scrollbarWidth: "none" }}
+      >
+        {images.map((src, i) => (
+          <div key={src} className="relative h-full w-full shrink-0 snap-center">
+            <Image src={src} alt={`${alt} photo ${i + 1}`} fill className="object-cover" unoptimized priority={i === 0} />
+          </div>
+        ))}
+      </div>
+      {images.length > 1 && (
+        <div className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-1.5 z-10">
+          {images.map((_, i) => (
+            <span
+              key={i}
+              className={cn("h-1.5 rounded-full transition-all", i === activeIndex ? "w-4 bg-white" : "w-1.5 bg-white/50")}
+            />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
 
 export function OfferingView({
   offering,
@@ -25,8 +64,8 @@ export function OfferingView({
   return (
     <div className="flex-1">
       <div className="relative h-44 w-full bg-slate-900">
-        <Image src={offering.media.heroImages[0]} alt={offering.title} fill className="object-cover" unoptimized />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+        <HeroCarousel images={offering.media.heroImages} alt={offering.title} />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
         <div className="absolute bottom-3 left-4 right-4 flex items-center gap-2">
           <div className="h-8 w-8 rounded-full bg-white flex items-center justify-center text-xs font-bold text-blue-700">
             {merchant.avatarInitials}
