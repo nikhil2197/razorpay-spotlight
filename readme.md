@@ -62,4 +62,4 @@ No Docker, no environment variables. Push to GitHub, import the repo in [Vercel]
 - [x] Pushed to GitHub / deployed to Vercel
 - [x] Real Luma-page content/images dropped into the offering schema (tennis + MMA)
 - [x] AI build log (`product_note/AI_BUILD_LOG.md`)
-- [ ] 90-second demo video
+- [x] 90-second demo video (`Nikhil_Ramesh_Razorpay_Spotlight.mp4`)
